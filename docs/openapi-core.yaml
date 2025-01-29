@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Java API Dishwasher
+  description: Smart dishwasher challenge
+  version: 0.0.4
+  contact:
+    name: Dishwasher
+
+servers:
+  - url: http://localhost:4000
+tags:
+  - name: programs
+paths:
+  /programs:
+    post:
+      tags:
+        - programs
+      operationId: startProgram
+      summary: POST Program to start (this should not be available if a program is already running)
+      description: Start program
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartProgram'
+      responses:
+        '201':
+          description: Program started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Program'
+    get:
+      tags:
+        - programs
+      summary: GET available programs to run
+      description: GET available programs to run
+      operationId: getPrograms
+      responses:
+        '200':
+          description: Get all programs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllPrograms'
+  /programs/running:
+    get:
+      tags:
+        - programs
+      summary: GET current running Program including other info e.g. time remaining
+      description: GET current running Program including other info e.g. time remaining
+      operationId: GET current running Program
+      responses:
+        '200':
+          description: GET current running Program
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunningProgram'
+  /programs/last150:
+    get:
+      tags:
+        - programs
+      summary: GET last 150 Programs run
+      description:
+      operationId:
+      responses:
+        '200':
+          description: GET current running Program
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Last150Programs'
+  /programs/statistics:
+    get:
+      tags:
+        - programs
+      summary: GET usage statistics including total water and electricity consumed, average etc
+      description:
+      operationId:
+      responses:
+        '200':
+          description: GET usage statistics including total water and electricity consumed, average etc
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProgramStatistics'
+
+components:
+  schemas:
+    StartProgram:
+      type: object
+      required:
+    Program:
+      type: object
+    AllPrograms:
+      type: array
+      items:
+        $ref: '#/components/schemas/Program'
